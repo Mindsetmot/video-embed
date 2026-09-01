@@ -24,12 +24,11 @@
 </head>
 <body>
 
-  <iframe id="player" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  <iframe id="player" allow="autoplay; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const VIDEO_URL = "https://youtu.be/dQw4w9WgXcQ";
-    /* const VIDEO_URL = params.get('url') || "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; */
+    const VIDEO_URL = params.get('url') || "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
     function getYoutubeId(url) {
       const patterns = [
