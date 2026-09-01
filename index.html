@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <iframe id="player" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+  <script>
+    // Ambil URL video dari parameter ?url= di address bar
+    // Contoh: video-embed.html?url=https://youtu.be/dQw4w9WgXcQ
+    const params = new URLSearchParams(window.location.search);
+    const VIDEO_URL = params.get('url') || "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
+    function getYoutubeId(url) {
+      const patterns = [
+        /youtu\.be\/([^?&]+)/,
+        /youtube\.com\/watch\?v=([^?&]+)/,
+        /youtube\.com\/embed\/([^?&]+)/,
+        /youtube\.com\/shorts\/([^?&]+)/,
+        /youtube\.com\/live\/([^?&]+)/
+      ];
+      for (const p of patterns) {
+        const match = url.match(p);
+        if (match) return match[1];
+      }
+      return null;
+    }
+
+    const id = getYoutubeId(VIDEO_URL);
+    if (id) {
+      document.getElementById('player').src =
+        `https://www.youtube.com/embed/${id}?autoplay=0&rel=0&modestbranding=1`;
+    } else {
+      document.body.innerHTML = "<p style='color:#fff;text-align:center;margin-top:20px;font-family:sans-serif'>URL video nggak valid. Pakai format:<br><code>video-embed.html?url=https://youtu.be/xxxxx</code></p>";
+    }
+  </script>
+
+</body>
+</html>
